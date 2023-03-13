@@ -14,8 +14,6 @@ def saveLog (fileName, log):
     f.close()
     return
 
-#def saveAllResults(randomSeeds, dataSetName, running_time,train_accuracy,test_accuracy,whole_accuracy, frequency_accuracy, tempEXA,
-# real_value_features,value_features_01):####store the time:
 def saveAlltime(randomSeeds, dataSetName, running_30):
     fileName1='running_30' + dataSetName + '.txt'
     saveResults(fileName1, running_30)
