@@ -1,5 +1,3 @@
-####song's idea
-##A Fast Hybrid Feature Selection Based on Correlation-Guided Clustering and Particle Swarm Optimization for High-Dimensional Data
 from warnings import simplefilter
 simplefilter(action='ignore', category=RuntimeWarning)
 simplefilter(action='ignore', category=UserWarning)
@@ -11,9 +9,6 @@ mine = MINE(alpha=0.6, c=15, est="mic_approx")
 
 def two_steps(mic_value,training_data):
   #####################################first step: get rou0
-    # temp = int(NDIM//(np.log(NDIM)))
-    # sorted_mic = sorted(mic_value)
-    # rou0 = min(0.1*max(mic_value),sorted_mic[temp-1])
     rou0 = 0.15 * max(mic_value)
   #####################################remove features
     removed_index = np.argwhere(mic_value<= rou0)
