@@ -1,5 +1,3 @@
-####song's idea
-##A Fast Hybrid Feature Selection Based on Correlation-Guided Clustering and Particle Swarm Optimization for High-Dimensional Data
 from warnings import simplefilter
 simplefilter(action='ignore', category=RuntimeWarning)
 simplefilter(action='ignore', category=UserWarning)
@@ -34,7 +32,7 @@ def uniform(low, up, size=None):####generate a matrix of the range of variables
 
 def findindex(org, x):
     result = []
-    for k,v in enumerate(org): #k和v分别表示org中的下标和该下标对应的元素
+    for k,v in enumerate(org): 
         if v == x:
             result.append(k)
     return result
@@ -87,11 +85,7 @@ def main(seed,dataset_name):
     else:
         MU = 200  #####bound to 200
     Max_FES = MU * NGEN
-    #training_data = normalise(x_train[:, 1:])
     training_data = x_train[:, 1:]
-    #training_data = preprocessing.normalize(x_train[:, 1:])
-    #crr = kNNCRR()
-    #X_crr, y_crr = crr.fit(x_train[:, 1:], x_train[:, 0])
     mic_value = []
     for i_in in range(NDIM):  ####just know the dimensinal number
       mine.compute_score(training_data[:,i_in], x_train[:,0])
@@ -110,7 +104,6 @@ def main(seed,dataset_name):
     min_fitness = []
     unique_number = []
     offspring = toolbox.population(n=MU)
-    #offspring = initialization(offspring,save_space_to_indi,all_pre_intervals,mic_value)
     
     toolbox.register("evaluate", fit_train1, train_data=training_data,label=x_train[:,0],index=save_space_to_indi,all_pre_intervals = all_pre_intervals)
     invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
@@ -125,10 +118,6 @@ def main(seed,dataset_name):
     dis = np.zeros((MU, MU))
     for i in range(MU):
         for j in range(MU):
-            #pca = PCA(1)
-            #pca.fit(offspring)
-            #offspring_new_space = pca.transform(offspring)
-            #dis[i, j] = euclidean_distance(offspring_new_space[i], offspring_new_space[j])
             dis[i, j] = euclidean_distance(offspring[i], offspring[j])
     for gen in range(1, NGEN):
         pop_new = toolbox.clone(offspring)
@@ -160,34 +149,13 @@ def main(seed,dataset_name):
         pop_mi = pop_new + offspring
         pop1 = delete_duplicate(pop_mi,save_space_to_indi,all_pre_intervals)
         offspring = toolbox.select(pop1, MU, ee)###compare with the current
-        
-        #offspring = toolbox.select1(offspring, pop_new)
         pop_fit = [ind.fitness.value for ind in offspring]  ######selection from author
         min_fitness.append(min(pop_fit))
-        if gen > 500 and np.std(min_fitness[-5:])==0:
-            offspring_temp = [t for t in offspring]
-            print('designed case',min_fitness[-2:],np.std(min_fitness[-2:]))
-            index_mulmodal = np.argwhere(abs(pop_fit-min(pop_fit)) <= ee)
-            index_mulmodal = [m[0] for m in index_mulmodal]
-            pop_part = [offspring[m1] for m1 in index_mulmodal]
-            for m2 in index_mulmodal:
-                offspring_temp.remove(offspring[m2])
-            pop_part,new_pop_fit,fit_num=local_search.add_remove_local_search(
-                pop_part,save_space_to_indi,all_pre_intervals,training_data,x_train[:,0],mic_value,fit_num,num)
-            invalid_ind = [ind for ind in pop_part if not ind.fitness.valid]
-            for ind, fit1 in zip(invalid_ind, new_pop_fit):
-                ind.fitness.value = fit1
-            offspring_temp.extend(pop_part)
-            offspring = [s for s in offspring_temp]
         pop_surrogate.extend(delete_duplicate(pop_new,save_space_to_indi,all_pre_intervals))
         pop_surrogate = delete_duplicate(pop_surrogate,save_space_to_indi,all_pre_intervals)
         unique_number.append(len(pop_surrogate))
         for i in range(MU):
             for j in range(MU):
-                #pca = PCA(1)
-                #pca.fit(offspring)
-                #offspring_new_space = pca.transform(offspring)
-                #dis[i, j] = euclidean_distance(offspring_new_space[i], offspring_new_space[j])
                 dis[i, j] = euclidean_distance(offspring[i], offspring[j])
         if fit_num > Max_FES:
             break
