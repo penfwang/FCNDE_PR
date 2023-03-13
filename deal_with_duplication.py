@@ -10,7 +10,7 @@ from bisect import bisect_left,bisect_right
 
 def findindex(org, x):
     result = []
-    for k,v in enumerate(org): #k和v分别表示org中的下标和该下标对应的元素
+    for k,v in enumerate(org):
         if v == x:
             result.append(k)
     return result
@@ -23,25 +23,6 @@ def get_all_index(lst,item):
             tmp.append(tag)
         tag +=1
     return tmp
-
-# def more_confidence(EXA, index_of_objectives):#####this is for the original confidence calculation using threshold o.6
-#     a = 0.5
-#     cr = np.zeros((len(index_of_objectives),1))
-#     for i in range(len(index_of_objectives)):###the number of indexes
-#         temp = 0
-#         object = EXA[index_of_objectives[i]]
-#         print(object)
-#         for ii in range(len(object)):###the number of features
-#            b = object[ii]
-#            if b > a:  con = (b - a) / (1 - a)
-#            else:      con = (a - b) / (a)
-#            temp = con + temp
-#         cr[i,0] = temp
-#     # exit()
-#     sorting = np.argsort(-cr[:,0])####sorting from maximum to minimum
-#     index_one = index_of_objectives[sorting[0]]
-#     return index_one
-
 
 def more_confidence(EXA, index_of_objectives):#####this is for the original confidence calculation using threshold o
     cr = np.zeros((len(index_of_objectives),1))
