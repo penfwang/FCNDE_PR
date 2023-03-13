@@ -32,21 +32,11 @@ def find_all(a_str, sub):
 
 def findindex(org, x):
     result = []
-    for k,v in enumerate(org): #k和v分别表示org中的下标和该下标对应的元素
+    for k,v in enumerate(org): 
         if v == x:
             result.append(k)
     return result
 
-
-
-######################################
-#def selNS(individuals, k):
-   # if len(individuals) < k:
-   #     return individuals
-   # pop_fit = [ind.fitness.value for ind in individuals]
-   # sorting = np.argsort(pop_fit)####sorting from minimum to maximum.
-  #  pop = [individuals[t] for t in sorting[:k]]
-  #  return pop
 
 
 
@@ -123,18 +113,6 @@ def selection_with_current(old,new,e):
 
 
 
-# def selection_with_current(old,new,e):
-#     pop = [i for i in old]
-#     for i in range(len(new)):
-#         temp = new[i].fitness.value - old[i].fitness.value
-#         if abs(temp)<=e:
-#             pop.append(new[i])
-#         elif temp > e:
-#             pop[i] = old[i]
-#         else:
-#             pop[i] = new[i]
-#
-#     return pop
 
 
 def mutDE(y, a, b, c, f):###mutation:DE/rand/1; if a is the best one, it will change as DE/best/1
